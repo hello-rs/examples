@@ -8,10 +8,7 @@ const LOCAL_NAME = "setting";
 //   output_dir: string;
 // }
 export const useSettingStore = defineStore(LOCAL_NAME, () => {
-  const setting = useLocalStorage<GSetting.ISetting>(
-    LOCAL_NAME,
-    default_setting()
-  );
+  const setting = useLocalStorage<GSetting.ISetting>(LOCAL_NAME, default_setting());
 
   const get_setting = computed(() => {
     return setting;
@@ -24,5 +21,5 @@ export const useSettingStore = defineStore(LOCAL_NAME, () => {
 
 // 辅助函数
 function default_setting(): GSetting.ISetting {
-  return { output_dir: "E:/go/src/HLXX_Server/HLXX_Server" };
+  return { output_dir: "" };
 }
