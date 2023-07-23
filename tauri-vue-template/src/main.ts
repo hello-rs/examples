@@ -9,9 +9,10 @@ async function bootstrap() {
   const app = createApp(App);
 
   setupStore(app);
+
   setupI18n(app);
 
-  setupRouter(app);
+  await setupRouter(app);
   app.mount("#app");
 }
 

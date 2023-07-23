@@ -1,6 +1,7 @@
 import { computed, ref } from "vue";
 import { defineStore } from "pinia";
 import { useLocalStorage } from "@vueuse/core";
+import { store } from ".";
 
 const LOCAL_NAME = "app";
 
@@ -45,4 +46,10 @@ export const useAppStore = defineStore(LOCAL_NAME, () => {
 // 辅助函数
 function default_setting(): IApp {
   return { theme: "auto", language: "auto" as Language };
+}
+
+// "getActivePinia()" was called but there was no active Pinia.
+// 手动传入 pinia 实例,解决还未挂载 pinia 时提前使用 pinia.
+export function useAppStoreWithOut() {
+  return useAppStore(store)
 }

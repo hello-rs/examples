@@ -8,9 +8,9 @@ import ruRU from "./ru-RU";
 import deDE from "./de-DE";
 import frFR from "./fr-FR";
 import itIT from "./it-IT";
-import { Language, useAppStore } from "@/store/app";
+import { Language, useAppStoreWithOut } from "@/store/app";
 
-const appStore = useAppStore();
+const appStore = useAppStoreWithOut();
 
 const defaultLocale = appStore.app.language || "en-US";
 

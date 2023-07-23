@@ -27,6 +27,7 @@ export default defineConfig(async () => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"), //相对路径别名配置 使用 @ 代替 src
+      "vue-i18n": "vue-i18n/dist/vue-i18n.cjs.js",
     },
   },
 }));
