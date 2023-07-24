@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { Language, Theme } from "@/store";
-import { MenuOption, NLayout, NLayoutSider, NMenu } from "naive-ui";
+import { t } from "@/locales";
+import { Language, Theme, useAppStore } from "@/store";
+import { MenuOption, NButton, NSelect, NLayout, NLayoutSider, NLayoutContent, NMenu, useMessage } from "naive-ui";
+
+const appStore = useAppStore()
+const ms = useMessage()
 
 // 菜单
 const menuOptions: MenuOption[] = [
@@ -37,24 +41,44 @@ const languageOptions: { label: string; key: Language; value: Language }[] = [
 ];
 // menu 点击事件
 function cliMenu(key: string, item: MenuOption): void {
-  window.$message?.info("[onUpdate:value]: " + JSON.stringify(key));
-  window.$message?.info("[onUpdate:value]: " + JSON.stringify(item));
+  ms.info("[onUpdate:value]: " + JSON.stringify(key));
+  ms.info("[onUpdate:value]: " + JSON.stringify(item));
 }
 // 多语言点击事件
-function cliLanguageMenu(key: string, item: MenuOption): void {
-  window.$message?.info("[onUpdate:value]: " + JSON.stringify(key));
-  window.$message?.info("[onUpdate:value]: " + JSON.stringify(item));
+function cli_reset() {
+  ms.success(t('common.success'))
+  window.location.reload()
 }
 </script>
 
 <template>
-  <NLayout has-sider>
-    <NLayoutSider>
-      <NMenu :options="menuOptions" @update:value="cliMenu" />
-    </NLayoutSider>
+  <div class="flex flex-row">
+    <NMenu :options="menuOptions" @update:value="cliMenu" />
     <template>
-      <NMenu :options="themeOptions" @update:value="cliLanguageMenu" />
-      <NMenu :options="languageOptions" @update:value="cliLanguageMenu" />
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.theme') }}</span>
+        <div class="flex flex-wrap items-center gap-4">
+          <template v-for="item of themeOptions" :key="item.key">
+            <NButton size="small" :type="item.key === appStore.app.theme ? 'primary' : undefined"
+              @click="appStore.set_theme(item.key)">
+              {{ item.label }}
+            </NButton>
+          </template>
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.language') }}</span>
+        <div class="flex flex-wrap items-center gap-4">
+          <NSelect :value="appStore.app.language" :options="languageOptions"
+            @update-value="(value: string) => appStore.set_language(value as Language)" />
+        </div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <span class="flex-shrink-0 w-[100px]">{{ $t('setting.resetUserInfo') }}</span>
+        <NButton size="small" @click="cli_reset">
+          {{ $t('common.reset') }}
+        </NButton>
+      </div>
     </template>
-  </NLayout>
+  </div>
 </template>

@@ -10,11 +10,8 @@ export function useTheme() {
 
   const isDark = computed(() => {
     const getPreferredScheme = () =>
-      window?.matchMedia?.("(prefers-color-scheme:dark)")?.matches
-        ? "dark"
-        : "light";
-    if (appStore.app.theme === "auto")
-      return OsTheme.value === getPreferredScheme();
+      window?.matchMedia?.("(prefers-color-scheme:dark)")?.matches;
+    if (appStore.app.theme === "auto") return getPreferredScheme();
     else return appStore.app.theme === "dark";
   });
 
