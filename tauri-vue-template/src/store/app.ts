@@ -37,6 +37,7 @@ export const useAppStore = defineStore(LOCAL_NAME, () => {
   function set_language(language: Language) {
     if (app.value.language !== language) {
       app.value.language = language;
+      window.location.reload();
     }
   }
 
@@ -51,5 +52,5 @@ function default_setting(): IApp {
 // "getActivePinia()" was called but there was no active Pinia.
 // 手动传入 pinia 实例,解决还未挂载 pinia 时提前使用 pinia.
 export function useAppStoreWithOut() {
-  return useAppStore(store)
+  return useAppStore(store);
 }
